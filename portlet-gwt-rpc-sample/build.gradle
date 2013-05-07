@@ -1,0 +1,107 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'war'
+
+configurations {
+  provided
+
+  // Define a special configuration for GWT compilation
+  gwtCompile
+}
+sourceSets {
+  // The following modifies the classpath to be used for compilation to include the dependencies declared in the
+  // "provided" configuration (i.e., provided scope) these dependencies will only be used for compiling classes
+  // but will not be included at runtime. Also these dependencies are non-transient.
+  main { compileClasspath += project.configurations.provided }
+  // Add the provided dependencies to the test classpath as well.
+  test { compileClasspath += project.configurations.provided }
+}
+
+def gwtVersion = '2.5.0'
+def springVersion = '3.2.2.RELEASE'
+def liferayVersion = '6.0.6'
+def gwtModuleName = 'com.dushyant.sample.GwtRpcPortletPortletModule'
+
+dependencies {
+  compile 'com.dushyant:liferay-portlet-gwt-rpc:1.0.0-SNAPSHOT'
+
+  compile "com.google.gwt:gwt-servlet:${gwtVersion}"
+  compile "org.springframework:spring-aop:${springVersion}"
+  compile "org.springframework:spring-beans:${springVersion}"
+  compile "org.springframework:spring-context:${springVersion}"
+  compile "org.springframework:spring-core:${springVersion}"
+  compile "org.springframework:spring-web:${springVersion}"
+  compile "org.springframework:spring-webmvc:${springVersion}"
+  compile "org.springframework:spring-webmvc-portlet:${springVersion}"
+  compile "org.springframework:spring-expression:${springVersion}"
+  compile 'javax.servlet:jstl:1.2'
+  compile 'javassist:javassist:3.3.GA'
+  compile 'org.jdom:jdom:1.1'
+  compile 'xml-resolver:xml-resolver:1.2'
+
+  runtime 'taglibs:standard:1.1.2'
+
+  provided 'javax.portlet:portlet-api:2.0'
+
+  provided "com.liferay.portal:portal-service:${liferayVersion}"
+  provided "com.liferay.portal:portal-impl:${liferayVersion}"
+
+  gwtCompile "com.google.gwt:gwt-user:${gwtVersion}"
+  gwtCompile "com.google.gwt:gwt-dev:${gwtVersion}"
+}
+
+def gwtBuildDir = "${buildDir}/war"
+
+task gwtCompile << {
+  file(gwtBuildDir).mkdirs();
+
+  addCompiledClassesToGwtClasspath()
+
+  ant.java(classname: 'com.google.gwt.dev.Compiler', failOnError: 'true', fork: 'true') {
+    jvmarg(value: '-Xms512m')
+    jvmarg(value: '-Xmx1024m')
+    arg(line: '-war ' + gwtBuildDir)
+    arg(value: "${gwtModuleName}")
+    classpath {
+      pathElement(location: 'src/main/java')
+      pathElement(path: configurations.compile.asPath)
+      pathElement(path: configurations.gwtCompile.asPath)
+    }
+  }
+}
+
+task devMode << {
+
+  addCompiledClassesToGwtClasspath()
+
+  ant.java(classname: 'com.google.gwt.dev.DevMode', failOnError: 'true', fork: 'true') {
+    jvmarg(value: '-Xms512m')
+    jvmarg(value: '-Xmx1024m')
+    arg(value: '-startupUrl')
+    arg(value: 'index.html')
+    arg(value: '-war')
+    arg(value: 'war')
+    arg(value: "${gwtModuleName}")
+    classpath {
+      pathElement(location: 'src/main/java')
+      pathElement(path: configurations.compile.asPath)
+      pathElement(path: configurations.gwtCompile.asPath)
+    }
+  }
+}
+
+private void addCompiledClassesToGwtClasspath()
+{
+// Add generated classes to the gwtCompile dependencies configuration
+  File generatedClassesDir = project.file("${project.buildDir}/classes")
+  project.dependencies {
+    gwtCompile project.files(generatedClassesDir.listFiles())
+  }
+}
+
+war.dependsOn gwtCompile
+
+war {
+  // Add the GWT dir to the generated WAR
+  from gwtBuildDir
+}

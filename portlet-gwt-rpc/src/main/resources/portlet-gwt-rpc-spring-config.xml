@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+   <!-- Enable component scanning for the liferay and wss common component only -->
+   <context:component-scan
+      base-package="com.dushyant.portlet.gwt"/>
+
+   <!--
+     Use DefaultRPCServiceExporterFactory. The DefaultRPCServiceExporterFactory
+     is defined in GWT SL library and is not annotated to be scanned by spring's
+     component scanner (i.e., it does not have @Component or @Service
+     annotation) hence explicitly declaring it here.
+
+     Turn the compression of the GWT RPC response off. By default, the
+     compression kicks off when deserialized stream size exceeds more than 256
+     bytes. The compression has an issue with Spring Portlet MVC and Liferay.
+     Somehow the response does not get decoded properly on the client side when
+     it is compressed.
+   -->
+   <bean name="rpcServiceExporterFactory"
+         class="org.gwtwidgets.server.spring.DefaultRPCServiceExporterFactory"
+         p:responseCompressionEnabled="false"/>
+
+</beans>

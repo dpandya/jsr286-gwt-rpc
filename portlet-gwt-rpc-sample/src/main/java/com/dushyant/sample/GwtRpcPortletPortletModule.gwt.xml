@@ -1,0 +1,16 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+   "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+
+<module rename-to="GwtRpcPortletPortletModule">
+   <!-- Inherit GWT modules. -->
+   <inherits name="com.google.gwt.user.User"/>
+   <inherits name="com.google.gwt.core.Core"/>
+
+   <!-- Define our module's entry point. -->
+   <entry-point class="com.dushyant.sample.ui.gwt.GwtRpcPortletEntryPoint"/>
+
+   <!-- Define source paths for our module specific code. -->
+   <source path="ui/gwt"/>
+   <source path="shared"/>
+
+</module>

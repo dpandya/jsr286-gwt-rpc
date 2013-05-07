@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+configurations {
+  provided
+}
+sourceSets {
+  // The following modifies the classpath to be used for compilation to include the dependencies declared in the
+  // "provided" configuration (i.e., provided scope) these dependencies will only be used for compiling classes
+  // but will not be included at runtime. Also these dependencies are non-transient.
+  main { compileClasspath += project.configurations.provided }
+  // Add the provided dependencies to the test classpath as well.
+  test { compileClasspath += project.configurations.provided }
+}
+
+dependencies {
+  compile 'com.dushyant:portlet-gwt-rpc:1.0.0-SNAPSHOT'
+  provided 'com.liferay.portal:portal-service:6.0.6'
+
+  provided 'javax.servlet:javax.servlet-api:3.0.1'
+  provided 'javax.portlet:portlet-api:2.0'
+}

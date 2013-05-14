@@ -1,3 +1,18 @@
+/*
+ * Copyright 2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.dushyant.sample.service;
 
 import javax.portlet.PortletRequest;
@@ -17,6 +32,8 @@ import org.springframework.web.portlet.context.PortletRequestAttributes;
 
 /**
  * An implementation of the GWT RPC service
+ *
+ * @author Dushyant Pandya
  */
 @Service
 public class SampleGwtRpcServiceImpl implements SampleGwtRpcService
@@ -41,10 +58,11 @@ public class SampleGwtRpcServiceImpl implements SampleGwtRpcService
             Long groupId = themeDisplay.getScopeGroupId();
             String groupName = themeDisplay.getScopeGroup().getDescriptiveName();
 
+            // Now lets get portlet session id
             String sessionId = getPortletSession().getId();
 
             serviceOutput = new ServiceOutput("Hello " + input.getName() + ". You are currently accessing group = " +
-                groupName + " with id = " + groupId + " and your sessionId = " + sessionId, input);
+                groupName + " with id = " + groupId + " and your portlet sessionId = " + sessionId, input);
         }
         catch (Throwable throwable)
         {
@@ -66,10 +84,5 @@ public class SampleGwtRpcServiceImpl implements SampleGwtRpcService
     private PortletRequestAttributes getPortletRequestAttributes()
     {
         return (PortletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    }
-
-    private ThemeDisplay getThemeDisplay(PortletRequest request)
-    {
-        return request == null ? null : (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
     }
 }

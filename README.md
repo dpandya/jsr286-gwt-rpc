@@ -42,5 +42,5 @@ Using _portlet-gwt-rpc_ in portlets (for portals other than Liferay)
 3. Add dependency on **portlet-gwt-rpc** in your portlet project
 4. Create a class implementing the interface **com.dushyant.portlet.servlet.resolver.RequestResponseResolver** for the portal env you are using.
 5. Create a spring bean of the above class and make it available in your spring application context (may be by just adding _@Component_ annotation and component scanning the same in Spring Application Context)
-6. Follow steps from 4 to 6 from _Using _liferay-portlet-gwt-rpc_ in your Liferay portlet_ above.
+6. Follow steps from 4 to 6 from _Using _liferay-portlet-gwt-rpc_ in your Liferay portlet above.
 

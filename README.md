@@ -1,6 +1,6 @@
-GWT RPC in Portlets using JSR268 Resource Requests
+GWT RPC in Portlets using JSR286 Resource Requests
 ========
-Portlet spec 2 (JSR268) added a new type of portlet requests called _resource requests_. These were specifically introduced to support AJAX in Portal environments. To use GWT-RPC in portal environment, the GWT-RPC requests should be made as portal resource requests. This gives access to various _portal_ and _portlet_ related objects like **PortletRequest**, **PortletSession** etc in GWT-RPC service implementations.
+Portlet spec 2 (JSR286) added a new type of portlet requests called _resource requests_. These were specifically introduced to support AJAX in Portal environments. To use GWT-RPC in portal environment, the GWT-RPC requests should be made as portal resource requests. This gives access to various _portal_ and _portlet_ related objects like **PortletRequest**, **PortletSession** etc in GWT-RPC service implementations.
 
 portlet-gwt-rpc
 --------
@@ -29,11 +29,11 @@ Using _liferay-portlet-gwt-rpc_ in your Liferay portlet
 3. Add dependency on **liferay-portlet-gwt-rpc** in your portlet project
 4. Create GWT RPC remote service interface (by extending **RemoteService** and annotating it with **@RemoteServiceRelativePath**) and corresponding implementation in normal way
 5. On server side:
-	1. Inject an instance of **GwtRpcDispatcherInterceptor** interceptor class to an instance of a handler mapping in your spring application context file as follows. `<bean name="defaultAnnotationHandlerMapping" class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="gwtRpcDispatcherInterceptor" />`. See **jsr268-gwt-rpc/portlet-gwt-rpc-sample/src/main/resources/portlet-spring-config.xml** for reference.
-	2. Form portlet resource phase url and pass the following two portlet request parameters 1. **ajaxMode=rpc** and 2.**servicePath** matching the value of **RemoteServiceRelativePath** annotation of the service. You can use **liferay-portlet:resourceURL** JSP tag to do this. See **jsr268-gwt-rpc/portlet-gwt-rpc-sample/src/main/webapp/WEB-INF/jsp/view.jsp** for reference.
+	1. Inject an instance of **GwtRpcDispatcherInterceptor** interceptor class to an instance of a handler mapping in your spring application context file as follows. `<bean name="defaultAnnotationHandlerMapping" class="org.springframework.web.portlet.mvc.annotation.DefaultAnnotationHandlerMapping" p:interceptors-ref="gwtRpcDispatcherInterceptor" />`. See **jsr286-gwt-rpc/portlet-gwt-rpc-sample/src/main/resources/portlet-spring-config.xml** for reference.
+	2. Form portlet resource phase url and pass the following two portlet request parameters 1. **ajaxMode=rpc** and 2.**servicePath** matching the value of **RemoteServiceRelativePath** annotation of the service. You can use **liferay-portlet:resourceURL** JSP tag to do this. See **jsr286-gwt-rpc/portlet-gwt-rpc-sample/src/main/webapp/WEB-INF/jsp/view.jsp** for reference.
 
 6. On client side, in GWT code:
-Read the portlet resource request url created in step 5.2 using a JSNI method in GWT layer and override the default GWT-RPC service url as follows. `SomeGwtServiceAsync service = GWT.create(SomeGwtService.class);`. See **getGwtRpcService()** method in **jsr268-gwt-rpc/portlet-gwt-rpc-sample/src/main/java/com/dushyant/sample/ui/gwt/GwtRpcPortletEntryPoint** for reference.
+Read the portlet resource request url created in step 5.2 using a JSNI method in GWT layer and override the default GWT-RPC service url as follows. `SomeGwtServiceAsync service = GWT.create(SomeGwtService.class);`. See **getGwtRpcService()** method in **jsr286-gwt-rpc/portlet-gwt-rpc-sample/src/main/java/com/dushyant/sample/ui/gwt/GwtRpcPortletEntryPoint** for reference.
 
 Using _portlet-gwt-rpc_ in portlets (for portals other than Liferay)
 --------

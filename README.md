@@ -12,7 +12,7 @@ The **liferay-portlet-gwt-rpc** provides capabilities to make GWT RPC calls in L
 
 portlet-gwt-rpc-sample
 --------
-This is a very simple portlet using GWT-RPC in Liferay Portal Environment. This portlet has a _SampleGwtRpcService_. The service passes sample _ServiceInput_ object and receives a sample _ServiceOutut_ object back over GWT RPC. It demonstrates the usage of "portlet related objects" like _PortletRequest_ and _PortletSession_ etc in GWT RPC service implementation.  
+This is a very simple portlet using GWT-RPC in Liferay Portal Environment. This portlet has a _SampleGwtRpcService_. The service passes sample _ServiceInput_ object and receives a sample _ServiceOutput_ object back over GWT RPC. It demonstrates the usage of "portlet related objects" like _PortletRequest_ and _PortletSession_ etc in GWT RPC service implementation.  
 
 Usage
 ========

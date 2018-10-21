@@ -26,7 +26,7 @@
    <packaging>war</packaging>
 
    <properties>
-      <spring.version>3.2.2.RELEASE</spring.version>
+      <spring.version>3.2.15.RELEASE</spring.version>
       <liferay.version>6.0.6</liferay.version>
       <gwt.version>2.5.0</gwt.version>
       <gwt.webapp.directory>${project.build.directory}/${project.build.finalName}</gwt.webapp.directory>

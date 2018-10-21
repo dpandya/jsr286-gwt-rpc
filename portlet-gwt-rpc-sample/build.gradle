@@ -33,7 +33,7 @@ sourceSets {
 }
 
 def gwtVersion = '2.5.0'
-def springVersion = '4.3.16.RELEASE'
+def springVersion = '4.3.20.RELEASE'
 def liferayVersion = '6.0.6'
 def gwtModuleName = 'com.dushyant.sample.GwtRpcPortletPortletModule'
 
